@@ -34,7 +34,7 @@ export default function DryingForm({ workOrderId, onSuccess }: DryingFormProps) 
     watch,
     formState: { errors },
   } = useForm<DryingLogInput>({
-    resolver: zodResolver(dryingLogSchema),
+    resolver: zodResolver(dryingLogSchema) as any,
     defaultValues: {
       workOrderId,
       startTime: new Date(),

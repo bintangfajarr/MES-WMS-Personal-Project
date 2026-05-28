@@ -5,13 +5,13 @@ import { WorkOrderStepStatus } from "@prisma/client";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { session, error } = await requireAuth(["ADMIN", "OPR_PROD"]);
   if (error) return error;
 
   try {
-    const { id: workOrderId } = params;
+    const { id: workOrderId } = await params;
     const body = await request.json();
     const { stepId, status } = body as { stepId: string; status: WorkOrderStepStatus };
 

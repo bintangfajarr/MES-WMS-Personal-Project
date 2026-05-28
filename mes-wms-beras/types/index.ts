@@ -27,4 +27,8 @@ export type {
   StockOpnameItem,
   RMStockMovement,
   FGStockMovement,
+  MachineStatus,
+  DowntimeReason,
+  WorkOrderStepType,
+  WorkOrderStepStatus,
 } from "@prisma/client";

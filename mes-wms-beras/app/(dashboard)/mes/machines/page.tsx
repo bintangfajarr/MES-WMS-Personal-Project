@@ -33,7 +33,7 @@ interface DowntimeLog {
 }
 
 export default function MachinesDashboardPage() {
-  const [machines, setMachines] = useState<Machine[]>([]);
+  const [machines, setMachines] = useState<any[]>([]);
   const [recentDowntimes, setRecentDowntimes] = useState<DowntimeLog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

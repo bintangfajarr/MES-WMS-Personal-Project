@@ -627,20 +627,20 @@ PHASE 16 → Deployment
 
 ### 9.1 API Routes
 
-- [ ] Buat `app/api/wms/rice-stock/route.ts` — GET (list batch dengan filter)
+- [x] Buat `app/api/wms/rice-stock/route.ts` — GET (list batch dengan filter)
   - Support filter: `?productId=&status=&locationId=&expiringInDays=`
-- [ ] Buat `app/api/wms/rice-stock/summary/route.ts` — GET (summary per SKU):
+- [x] Buat `app/api/wms/rice-stock/summary/route.ts` — GET (summary per SKU):
   - Return: per produk: totalSak, totalKg, batchCount, nearestExpiry
-- [ ] Buat `app/api/wms/rice-stock/inbound/route.ts` — POST (penerimaan dari produksi)
+- [x] Buat `app/api/wms/rice-stock/inbound/route.ts` — POST (penerimaan dari produksi)
   - Input: batchId, locationId, confirmedQty, condition, notes
   - `prisma.$transaction()`:
     - Update FinishedGoodsBatch: status → DI_GUDANG, locationId, receivedToWarehouseAt
     - Update WarehouseLocation: status → TERISI
     - Create FGStockMovement (type: IN)
   - Validasi: batchId harus status PRODUKSI, locationId harus KOSONG
-- [ ] Buat `app/api/wms/rice-stock/stock-opname/route.ts` — GET (list), POST (submit opname)
-- [ ] Buat `app/api/wms/rice-stock/stock-opname/[id]/route.ts` — GET (detail)
-- [ ] Buat `app/api/wms/rice-stock/stock-opname/[id]/approve/route.ts` — PATCH (ADMIN approve)
+- [x] Buat `app/api/wms/rice-stock/stock-opname/route.ts` — GET (list), POST (submit opname)
+- [x] Buat `app/api/wms/rice-stock/stock-opname/[id]/route.ts` — GET (detail)
+- [x] Buat `app/api/wms/rice-stock/stock-opname/[id]/approve/route.ts` — PATCH (ADMIN approve)
   - `prisma.$transaction()`:
     - Update StockOpname: isApproved = true
     - Per item variance ≠ 0: create FGStockMovement (type: ADJUSTMENT)
@@ -648,27 +648,27 @@ PHASE 16 → Deployment
 
 ### 9.2 Zod Schemas
 
-- [ ] Buat `lib/validations/rice-stock.ts`:
+- [x] Buat `lib/validations/rice-stock.ts`:
   - `inboundSchema`: batchId, locationId, confirmedQty, condition, notes
   - `stockOpnameSchema`: items (array: batchId, physicalQty, notes), notes
   
 ### 9.3 Halaman
 
-- [ ] Buat `app/(dashboard)/wms/rice-warehouse/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/rice-warehouse/page.tsx`:
   - PageHeader: "Gudang Beras"
   - Stats cards per produk: total sak, total kg, batch aktif (gunakan summary API)
   - Alert banner jika ada batch hampir kadaluarsa
   - DataTable batch: Batch Number, Produk, Ukuran, Jumlah Sak, Lokasi, Tgl Produksi, Tgl Kadaluarsa, Status
   - Filter: produk, status, lokasi
   - Highlight baris merah jika kadaluarsa <30 hari
-- [ ] Buat `app/(dashboard)/wms/rice-warehouse/inbound/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/rice-warehouse/inbound/page.tsx`:
   - List batch dengan status PRODUKSI (belum masuk gudang)
   - Per batch: tombol "Terima ke Gudang" → modal form assign lokasi
   - Form: pilih lokasi kosong (dropdown), konfirmasi jumlah, kondisi
-- [ ] Buat `app/(dashboard)/wms/rice-warehouse/stock-opname/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/rice-warehouse/stock-opname/page.tsx`:
   - List stock opname sebelumnya
   - Tombol "Mulai Stock Opname Baru"
-- [ ] Buat `app/(dashboard)/wms/rice-warehouse/stock-opname/create/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/rice-warehouse/stock-opname/create/page.tsx`:
   - Tabel semua batch aktif dengan kolom: Batch, Produk, Jumlah Sistem, Input Fisik, Variance
   - Input fisik per baris (number input)
   - Summary: total variance, jumlah item berbeda
@@ -676,8 +676,8 @@ PHASE 16 → Deployment
 
 ### 9.4 Komponen
 
-- [ ] Buat `components/wms/RiceStockTable.tsx` — tabel dengan highlight kadaluarsa
-- [ ] Buat `components/wms/InboundFGForm.tsx` — form penerimaan dari produksi
+- [x] Buat `components/wms/RiceStockTable.tsx` — tabel dengan highlight kadaluarsa
+- [x] Buat `components/wms/InboundFGForm.tsx` — form penerimaan dari produksi
 
 ---
 
@@ -685,7 +685,7 @@ PHASE 16 → Deployment
 
 ### 10.1 API Routes
 
-- [ ] Buat `app/api/wms/delivery-orders/route.ts` — GET (list), POST (create DO)
+- [x] Buat `app/api/wms/delivery-orders/route.ts` — GET (list), POST (create DO)
   - GET: support filter `?status=&customerId=&driverId=&startDate=&endDate=`
   - POST:
     - Generate DO number
@@ -695,27 +695,27 @@ PHASE 16 → Deployment
       - Per item: Update FinishedGoodsBatch status → RESERVED
       - Create FGStockMovement (type: OUT, pending)
     - Validasi: stok tersedia mencukupi per batch
-- [ ] Buat `app/api/wms/delivery-orders/[id]/route.ts` — GET (detail + items)
-- [ ] Buat `app/api/wms/delivery-orders/[id]/confirm/route.ts` — PATCH (CONFIRMED → PICKING)
-- [ ] Buat `app/api/wms/delivery-orders/[id]/ready/route.ts` — PATCH (PICKING → READY_TO_SHIP)
-- [ ] Buat `app/api/wms/delivery-orders/[id]/ship/route.ts` — PATCH (READY_TO_SHIP → SHIPPED)
+- [x] Buat `app/api/wms/delivery-orders/[id]/route.ts` — GET (detail + items)
+- [x] Buat `app/api/wms/delivery-orders/[id]/confirm/route.ts` — PATCH (CONFIRMED → PICKING)
+- [x] Buat `app/api/wms/delivery-orders/[id]/ready/route.ts` — PATCH (PICKING → READY_TO_SHIP)
+- [x] Buat `app/api/wms/delivery-orders/[id]/ship/route.ts` — PATCH (READY_TO_SHIP → SHIPPED)
   - Set shippedAt = now()
-- [ ] Buat `app/api/wms/delivery-orders/[id]/delivered/route.ts` — PATCH (SHIPPED → DELIVERED)
+- [x] Buat `app/api/wms/delivery-orders/[id]/delivered/route.ts` — PATCH (SHIPPED → DELIVERED)
   - `prisma.$transaction()`:
     - Update DeliveryOrder: status DELIVERED, deliveredAt = now()
     - Per item: Update FinishedGoodsBatch status → SHIPPED, kurangi totalSak
     - Confirm FGStockMovement
-- [ ] Buat `app/api/wms/delivery-orders/[id]/return/route.ts` — POST (catat retur)
+- [x] Buat `app/api/wms/delivery-orders/[id]/return/route.ts` — POST (catat retur)
   - Create DeliveryReturn
   - `prisma.$transaction()`:
     - Update DeliveryOrder status → PARTIAL_RETURN
     - Kembalikan stok batch yang diretur: Update FinishedGoodsBatch totalSak, status → DI_GUDANG
     - Create FGStockMovement (type: IN, retur)
-- [ ] Buat `app/api/wms/delivery-orders/[id]/surat-jalan/route.ts` — GET (return PDF buffer)
+- [x] Buat `app/api/wms/delivery-orders/[id]/surat-jalan/route.ts` — GET (return PDF buffer)
 
 ### 10.2 FIFO Logic
 
-- [ ] Buat `lib/utils/fifo.ts`:
+- [x] Buat `lib/utils/fifo.ts`:
   ```typescript
   /**
    * Sarankan batch untuk DO berdasarkan FIFO (expiry date paling awal duluan)
@@ -731,22 +731,22 @@ PHASE 16 → Deployment
     // Return sampai total sak terpenuhi
   }
   ```
-- [ ] Integrasikan FIFO logic ke POST delivery-orders: saat create DO, call suggestBatches
+- [x] Integrasikan FIFO logic ke POST delivery-orders: saat create DO, call suggestBatches
 
 ### 10.3 Zod Schemas
 
-- [ ] Buat `lib/validations/delivery-order.ts`:
+- [x] Buat `lib/validations/delivery-order.ts`:
   - `createDeliveryOrderSchema`: customerId, driverId, deliveryDate, items (array: batchId, orderedQty), notes
   - `deliveryReturnSchema`: items (array: batchId, returnedQty, reason), notes
 
 ### 10.4 Halaman
 
-- [ ] Buat `app/(dashboard)/wms/delivery/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/delivery/page.tsx`:
   - PageHeader: "Delivery Order" + button "Buat DO"
   - Stats cards: DO pending, DO hari ini, DO bulan ini
   - DataTable: DO Number, Pelanggan, Tanggal Kirim, Total Item, Status, Driver
   - Filter by status, tanggal
-- [ ] Buat `app/(dashboard)/wms/delivery/create/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/delivery/create/page.tsx`:
   - Form buat DO
   - Pilih pelanggan (dropdown)
   - Pilih supir (dropdown — user role DRIVER)
@@ -755,13 +755,13 @@ PHASE 16 → Deployment
     - Setelah input produk & jumlah: tampilkan FIFO suggestion (batch yang akan digunakan)
     - Operator bisa override batch yang dipilih
   - Summary: total sak, total estimasi berat
-- [ ] Buat `app/(dashboard)/wms/delivery/[id]/page.tsx`:
+- [x] Buat `app/(dashboard)/wms/delivery/[id]/page.tsx`:
   - Detail DO: info header, status timeline, tabel items
   - Tombol aksi sesuai status (Confirm, Ready, Ship, Delivered)
   - Tombol "Generate Surat Jalan" (download PDF)
   - Section retur (jika status DELIVERED)
   - Form catat retur
-- [ ] Buat `app/(dashboard)/wms/delivery/driver/page.tsx` — khusus role DRIVER:
+- [x] Buat `app/(dashboard)/wms/delivery/driver/page.tsx` — khusus role DRIVER:
   - Tampilkan DO yang di-assign ke driver yang login
   - Filter: hari ini, upcoming
   - Tombol "Konfirmasi Terkirim" per DO
@@ -769,9 +769,9 @@ PHASE 16 → Deployment
 
 ### 10.5 Komponen
 
-- [ ] Buat `components/wms/DeliveryOrderForm.tsx`
-- [ ] Buat `components/wms/FIFOBatchSelector.tsx` — tampilkan suggestion + override
-- [ ] Buat `components/wms/DeliveryStatusTimeline.tsx` — visual timeline status DO
+- [x] Buat `components/wms/DeliveryOrderForm.tsx`
+- [x] Buat `components/wms/FIFOBatchSelector.tsx` — tampilkan suggestion + override
+- [x] Buat `components/wms/DeliveryStatusTimeline.tsx` — visual timeline status DO
 
 ---
 

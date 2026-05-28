@@ -23,7 +23,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const { id } = await params;
     const body = await request.json();
     const parsed = editMachineSchema.safeParse(body);
-    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.errors[0].message }, { status: 400 });
+    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.issues[0].message }, { status: 400 });
     const { purchaseDate, lastMaintenanceDate, nextMaintenanceDate, ...rest } = parsed.data;
     const updateData: any = { ...rest };
     if (purchaseDate !== undefined) updateData.purchaseDate = purchaseDate ? new Date(purchaseDate) : null;

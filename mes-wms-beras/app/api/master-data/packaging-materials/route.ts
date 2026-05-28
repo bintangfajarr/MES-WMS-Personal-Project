@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const parsed = createPackagingMaterialSchema.safeParse(body);
-    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.errors[0].message }, { status: 400 });
+    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.issues[0].message }, { status: 400 });
     const existing = await prisma.packagingMaterial.findUnique({ where: { code: parsed.data.code } });
     if (existing) return NextResponse.json({ success: false, error: "Code already in use" }, { status: 409 });
     const material = await prisma.packagingMaterial.create({ data: parsed.data });

@@ -36,15 +36,7 @@ interface WorkOrder {
     name: string;
     email: string;
   };
-  steps: Array<{
-    id: string;
-    stepType: any;
-    stepOrder: number;
-    status: any;
-    startedAt: string | null;
-    completedAt: string | null;
-    notes: string | null;
-  }>;
+  steps: any[];
 }
 
 export default function WorkOrderDetailPage() {
@@ -265,7 +257,7 @@ export default function WorkOrderDetailPage() {
               <span className="font-bold text-emerald-400 text-lg">62.00%</span>
               <p className="text-[11px] text-slate-500">Persentase yield standar konversi gabah ke beras siap kemas.</p>
             </div>
-          </div>
+          </CardContent>
         </Card>
       </div>
 

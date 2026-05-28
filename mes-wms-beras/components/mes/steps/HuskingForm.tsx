@@ -34,7 +34,7 @@ export default function HuskingForm({ workOrderId, onSuccess }: HuskingFormProps
     watch,
     formState: { errors },
   } = useForm<HuskingLogInput>({
-    resolver: zodResolver(huskingLogSchema),
+    resolver: zodResolver(huskingLogSchema) as any,
     defaultValues: {
       workOrderId,
       startTime: new Date(),

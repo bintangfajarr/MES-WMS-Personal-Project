@@ -26,7 +26,7 @@ export default function SortingForm({ workOrderId, onSuccess }: SortingFormProps
     watch,
     formState: { errors },
   } = useForm<SortingLogInput>({
-    resolver: zodResolver(sortingLogSchema),
+    resolver: zodResolver(sortingLogSchema) as any,
     defaultValues: {
       workOrderId,
       startTime: new Date(),

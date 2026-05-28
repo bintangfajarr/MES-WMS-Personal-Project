@@ -5,14 +5,14 @@ import { WorkOrderStatus } from "@prisma/client";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   // Allow ADMIN and OPR_PROD to update status generally, but enforce role restrictions inside
   const { session, error } = await requireAuth(["ADMIN", "OPR_PROD"]);
   if (error) return error;
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { status } = body as { status: WorkOrderStatus };
 

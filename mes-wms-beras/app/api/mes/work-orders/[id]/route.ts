@@ -4,13 +4,13 @@ import { requireAuth } from "@/lib/utils/auth-guard";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { session, error } = await requireAuth(["ADMIN", "OPR_PROD", "OPR_WHS"]);
   if (error) return error;
 
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const workOrder = await prisma.workOrder.findUnique({
       where: { id },

@@ -38,7 +38,7 @@ export default function WorkOrderForm() {
     watch,
     formState: { errors },
   } = useForm<CreateWorkOrderInput>({
-    resolver: zodResolver(createWorkOrderSchema),
+    resolver: zodResolver(createWorkOrderSchema) as any,
     defaultValues: {
       targetProducts: [],
       notes: "",

@@ -5,7 +5,9 @@ import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, Wheat, Eye, EyeOff, Lock, Mail } from "lucide-react";
 
-export default function LoginPage() {
+import { Suspense } from "react";
+
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -160,3 +162,16 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen items-center justify-center gap-2">
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
+

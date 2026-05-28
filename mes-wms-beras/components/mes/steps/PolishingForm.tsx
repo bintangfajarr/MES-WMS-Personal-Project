@@ -34,7 +34,7 @@ export default function PolishingForm({ workOrderId, onSuccess }: PolishingFormP
     watch,
     formState: { errors },
   } = useForm<PolishingLogInput>({
-    resolver: zodResolver(polishingLogSchema),
+    resolver: zodResolver(polishingLogSchema) as any,
     defaultValues: {
       workOrderId,
       soshLevel: "SEDANG",

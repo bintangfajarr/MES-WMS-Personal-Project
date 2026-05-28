@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const parsed = createProductSchema.safeParse(body);
-    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.errors[0].message }, { status: 400 });
+    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.issues[0].message }, { status: 400 });
     const existing = await prisma.product.findUnique({ where: { sku: parsed.data.sku } });
     if (existing) return NextResponse.json({ success: false, error: "SKU already in use" }, { status: 409 });
     const product = await prisma.product.create({ data: parsed.data });
