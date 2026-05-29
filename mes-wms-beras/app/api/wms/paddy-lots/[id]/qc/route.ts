@@ -4,6 +4,8 @@ import { requireAuth } from "@/lib/utils/auth-guard";
 import { incomingQCSchema } from "@/lib/validations/paddy-lot";
 import { calculateNetWeight } from "@/lib/utils/net-weight";
 
+import { runAlertChecks } from "@/lib/utils/alert-checker";
+
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -106,6 +108,9 @@ export async function POST(
 
       return lotUpdated;
     });
+
+    // Run alert checks in the background (non-blocking)
+    runAlertChecks().catch((err) => console.error("Error running alert checks:", err));
 
     return NextResponse.json({ success: true, data: updatedLot });
   } catch (e) {

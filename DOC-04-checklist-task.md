@@ -779,7 +779,7 @@ PHASE 16 → Deployment
 
 ### 11.1 API Routes
 
-- [ ] Buat `app/api/reports/dashboard-stats/route.ts` — GET
+- [x] Buat `app/api/reports/dashboard-stats/route.ts` — GET
   - Return semua data yang dibutuhkan dashboard dalam satu request:
     ```typescript
     {
@@ -802,9 +802,9 @@ PHASE 16 → Deployment
 
 ### 11.2 Halaman Dashboard
 
-- [ ] Buat `app/(dashboard)/page.tsx`:
+- [x] Buat `app/(dashboard)/page.tsx`:
   - Fetch data dari `/api/reports/dashboard-stats`
-  - Auto-refresh setiap 5 menit (TanStack Query `refetchInterval`)
+  - Auto-refresh setiap 5 menit (TanStack Query `refetchInterval` atau polling custom 30s)
   - **Row 1 — Stats Cards:**
     - Stok Padi (kg) dengan icon gudang
     - Stok Beras Premium (sak) — warna hijau
@@ -823,11 +823,11 @@ PHASE 16 → Deployment
 
 ### 11.3 Komponen Dashboard
 
-- [ ] Buat `components/dashboard/StockSummaryCard.tsx` — stats card dengan icon & trend
-- [ ] Buat `components/dashboard/ProductionChart.tsx` — ComposedChart 7 hari
-- [ ] Buat `components/dashboard/YieldGaugeChart.tsx` — gauge chart untuk rata-rata yield
-- [ ] Buat `components/dashboard/ActiveWorkOrderList.tsx` — mini tabel WO aktif
-- [ ] Buat `components/dashboard/MachineStatusGrid.tsx` — grid semua mesin
+- [x] Buat `components/dashboard/StockSummaryCard.tsx` — stats card dengan icon & trend
+- [x] Buat `components/dashboard/ProductionChart.tsx` — ComposedChart 7 hari
+- [x] Buat `components/dashboard/YieldGaugeChart.tsx` — gauge chart untuk rata-rata yield
+- [x] Buat `components/dashboard/ActiveWorkOrderList.tsx` — mini tabel WO aktif
+- [x] Buat `components/dashboard/MachineStatusGrid.tsx` — grid semua mesin
 
 ---
 
@@ -835,40 +835,40 @@ PHASE 16 → Deployment
 
 ### 12.1 API Routes Reports
 
-- [ ] Buat `app/api/reports/production/route.ts` — GET
+- [x] Buat `app/api/reports/production/route.ts` — GET
   - Query params: `startDate`, `endDate`
   - Return: list WO selesai + detail yield, summary rata-rata yield, total produksi
-- [ ] Buat `app/api/reports/machine-oee/route.ts` — GET
+- [x] Buat `app/api/reports/machine-oee/route.ts` — GET
   - Per mesin: total jam operasi, total downtime menit, OEE %
   - Gunakan `calculateOEE()` dari yield-calculator.ts
-- [ ] Buat `app/api/reports/inventory/route.ts` — GET
+- [x] Buat `app/api/reports/inventory/route.ts` — GET
   - Stock movement summary per hari (padi masuk/keluar, beras masuk/keluar)
   - Stok saat ini vs minimum stok
-- [ ] Buat `app/api/reports/delivery/route.ts` — GET
+- [x] Buat `app/api/reports/delivery/route.ts` — GET
   - List semua DO terkirim per periode
   - On-time delivery rate
   - Total retur
-- [ ] Buat `app/api/reports/supplier-quality/route.ts` — GET
+- [x] Buat `app/api/reports/supplier-quality/route.ts` — GET
   - Per supplier: total lot, acceptance rate, avg kadar air, avg yield dari lot mereka
 
 ### 12.2 Halaman
 
-- [ ] Buat `app/(dashboard)/reports/yield/page.tsx`:
+- [x] Buat `app/(dashboard)/reports/yield/page.tsx`:
   - Date range picker
   - Summary cards: rata-rata overall yield, rata-rata husking yield, rata-rata polishing yield
   - Tabel: per WO — nomor, lot, padi masuk, beras jadi, husking yield, polishing yield, overall yield
   - Line chart: trend yield per periode
   - Tombol export CSV
-- [ ] Buat `app/(dashboard)/reports/production/page.tsx`:
+- [x] Buat `app/(dashboard)/reports/production/page.tsx`:
   - Date range picker
   - Total produksi per produk (Premium/Medium/Patah) dalam kg dan sak
   - Bar chart per produk per periode
   - Tabel detail per WO
-- [ ] Buat `app/(dashboard)/reports/inventory/page.tsx`:
+- [x] Buat `app/(dashboard)/reports/inventory/page.tsx`:
   - Summary stok saat ini vs minimum
   - Grafik pergerakan stok per hari
   - Tabel log pergerakan stok
-- [ ] Buat `app/(dashboard)/reports/delivery/page.tsx`:
+- [x] Buat `app/(dashboard)/reports/delivery/page.tsx`:
   - Date range picker
   - Summary: total DO, total sak terkirim, on-time rate, total retur
   - Tabel DO per periode
@@ -876,7 +876,7 @@ PHASE 16 → Deployment
 
 ### 12.3 Export CSV
 
-- [ ] Buat `lib/utils/export-csv.ts`:
+- [x] Buat `lib/utils/export-csv.ts`:
   ```typescript
   export function exportToCSV(data: Record<string, any>[], filename: string): void {
     const headers = Object.keys(data[0]);
@@ -889,7 +889,7 @@ PHASE 16 → Deployment
     URL.revokeObjectURL(url);
   }
   ```
-- [ ] Tambahkan tombol export CSV di setiap halaman laporan
+- [x] Tambahkan tombol export CSV di setiap halaman laporan
 
 ---
 
@@ -897,22 +897,22 @@ PHASE 16 → Deployment
 
 ### 13.1 API Routes
 
-- [ ] Buat `app/api/alerts/route.ts` — GET (list alert aktif, filter by role)
-- [ ] Buat `app/api/alerts/[id]/dismiss/route.ts` — PATCH (dismiss alert)
-- [ ] Buat `app/api/alerts/check/route.ts` — POST (trigger pengecekan alert manual)
+- [x] Buat `app/api/alerts/route.ts` — GET (list alert aktif, filter by role)
+- [x] Buat `app/api/alerts/[id]/dismiss/route.ts` — PATCH (dismiss alert)
+- [x] Buat `app/api/alerts/check/route.ts` — POST (trigger pengecekan alert manual)
   - Panggil `runAlertChecks()` dari `lib/utils/alert-checker.ts`
   - Endpoint ini dipanggil dari cron job atau setelah operasi penting
 
 ### 13.2 Alert Integration
 
-- [ ] Panggil `runAlertChecks()` setelah operasi-operasi penting:
-  - [ ] Setelah QC penerimaan padi diterima
-  - [ ] Setelah packaging log disubmit (cek stok beras)
-  - [ ] Setelah delivery order dibuat (cek stok)
-  - [ ] Setelah inbound FG selesai
-- [ ] Buat `hooks/useAlerts.ts` — hook untuk fetch & dismiss alerts
-- [ ] Tampilkan badge jumlah alert di Header
-- [ ] Tampilkan AlertBanner di dashboard
+- [x] Panggil `runAlertChecks()` setelah operasi-operasi penting:
+  - [x] Setelah QC penerimaan padi diterima
+  - [x] Setelah packaging log disubmit (cek stok beras)
+  - [x] Setelah delivery order dibuat (cek stok)
+  - [x] Setelah inbound FG selesai
+- [x] Buat `hooks/useAlerts.ts` — hook untuk fetch & dismiss alerts
+- [x] Tampilkan badge jumlah alert di Header
+- [x] Tampilkan AlertBanner di dashboard
 
 ---
 
@@ -920,7 +920,7 @@ PHASE 16 → Deployment
 
 ### 14.1 Komponen PDF
 
-- [ ] Buat `components/wms/SuratJalanPDF.tsx` menggunakan `@react-pdf/renderer`:
+- [x] Buat `components/wms/SuratJalanPDF.tsx` menggunakan `@react-pdf/renderer`:
   ```typescript
   // Komponen PDF dengan sections:
   // - Header: nama perusahaan, alamat, nomor telp
@@ -929,16 +929,16 @@ PHASE 16 → Deployment
   // - Tabel produk: Nama Produk, Ukuran, Jumlah Sak, Berat (kg), Batch Number
   // - Footer: Total berat, kolom tanda tangan pengirim + penerima
   ```
-- [ ] Buat `app/api/wms/delivery-orders/[id]/surat-jalan/route.ts`:
+- [x] Buat `app/api/wms/delivery-orders/[id]/surat-jalan/route.ts`:
   - Fetch data DO + items + customer dari database
   - Render PDF menggunakan `renderToBuffer()` dari `@react-pdf/renderer`
   - Return response dengan header `Content-Type: application/pdf`
 
 ### 14.2 Integrasi
 
-- [ ] Tambahkan tombol "Download Surat Jalan" di halaman detail DO
-- [ ] Tombol membuka URL `/api/wms/delivery-orders/[id]/surat-jalan` di tab baru
-- [ ] Test: PDF bisa dibuka dan dicetak di browser
+- [x] Tambahkan tombol "Download Surat Jalan" di halaman detail DO
+- [x] Tombol membuka URL `/api/wms/delivery-orders/[id]/surat-jalan` di tab baru
+- [x] Test: PDF bisa dibuka dan dicetak di browser
 
 ---
 

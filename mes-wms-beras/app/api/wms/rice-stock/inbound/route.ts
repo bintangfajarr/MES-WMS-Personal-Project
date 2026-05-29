@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/utils/auth-guard";
 import { inboundSchema } from "@/lib/validations/rice-stock";
+import { runAlertChecks } from "@/lib/utils/alert-checker";
 
 export async function POST(request: Request) {
   const { session, error } = await requireAuth(["ADMIN", "OPR_WHS"]);
@@ -117,6 +118,9 @@ export async function POST(request: Request) {
 
       return updatedBatch;
     });
+
+    // Run alert checks in the background (non-blocking)
+    runAlertChecks().catch((err) => console.error("Error running alert checks:", err));
 
     return NextResponse.json({ success: true, data: result }, { status: 201 });
   } catch (e) {

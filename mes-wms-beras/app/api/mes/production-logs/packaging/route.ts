@@ -4,6 +4,8 @@ import { requireAuth } from "@/lib/utils/auth-guard";
 import { packagingLogSchema } from "@/lib/validations/production-log";
 import { addYears } from "date-fns";
 
+import { runAlertChecks } from "@/lib/utils/alert-checker";
+
 export async function POST(request: Request) {
   const { session, error } = await requireAuth(["ADMIN", "OPR_PROD"]);
   if (error) return error;
@@ -224,6 +226,9 @@ export async function POST(request: Request) {
 
       return prodLog;
     });
+
+    // Run alert checks in the background (non-blocking)
+    runAlertChecks().catch((err) => console.error("Error running alert checks:", err));
 
     return NextResponse.json({ success: true, data: result }, { status: 201 });
   } catch (e) {

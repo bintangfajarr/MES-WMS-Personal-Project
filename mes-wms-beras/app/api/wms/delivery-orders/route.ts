@@ -4,6 +4,7 @@ import { requireAuth } from "@/lib/utils/auth-guard";
 import { createDeliveryOrderSchema } from "@/lib/validations/delivery-order";
 import { generateDONumber } from "@/lib/utils/do-number";
 import { DeliveryOrderStatus } from "@prisma/client";
+import { runAlertChecks } from "@/lib/utils/alert-checker";
 
 // GET: list delivery orders
 export async function GET(request: Request) {
@@ -216,6 +217,9 @@ export async function POST(request: Request) {
 
       return deliveryOrder;
     });
+
+    // Run alert checks in the background (non-blocking)
+    runAlertChecks().catch((err) => console.error("Error running alert checks:", err));
 
     return NextResponse.json({ success: true, data: result }, { status: 201 });
   } catch (e) {
