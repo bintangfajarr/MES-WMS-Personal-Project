@@ -6,7 +6,7 @@ interface ErrorStateProps {
 }
 
 export default function ErrorState({
-  message = "Something went wrong. Please try again.",
+  message = "Terjadi kesalahan. Silakan coba lagi.",
   onRetry,
 }: ErrorStateProps) {
   return (
@@ -21,9 +21,10 @@ export default function ErrorState({
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors"
         >
           <RefreshCw className="w-3.5 h-3.5" />
-          Try Again
+          Coba Lagi
         </button>
       )}
     </div>
   );
 }
+

@@ -403,7 +403,11 @@ export default function DeliveryDetailPage() {
                         <p className="text-slate-300">
                           Alasan: <span className="text-white font-medium">{ret.reason}</span>
                         </p>
-                        {ret.notes && <p className="text-slate-500 italic">" {ret.notes} "</p>}
+                        {ret.notes && (
+                          <p className="text-slate-500 italic">
+                            &ldquo; {ret.notes} &rdquo;
+                          </p>
+                        )}
                       </div>
                       <div className="text-right">
                         <span className="inline-block bg-red-500/10 border border-red-500/20 text-red-400 px-2 py-0.5 rounded font-bold">

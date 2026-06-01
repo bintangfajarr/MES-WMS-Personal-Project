@@ -7,8 +7,8 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({
-  title = "No data yet",
-  description = "Get started by adding your first item.",
+  title = "Belum ada data",
+  description = "Mulai dengan menambahkan item pertama.",
   action,
 }: EmptyStateProps) {
   return (

@@ -42,7 +42,7 @@ export default function DataTable<T extends Record<string, any>>({
   data,
   isLoading = false,
   pagination,
-  emptyMessage = "No data found",
+  emptyMessage = "Belum ada data",
   onRowClick,
 }: DataTableProps<T>) {
   return (
@@ -122,50 +122,84 @@ export default function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* Pagination */}
-      {pagination && pagination.totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
-          <span className="text-xs text-slate-500">
-            Page {pagination.page} of {pagination.totalPages}
-          </span>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => pagination.onPageChange(pagination.page - 1)}
-              disabled={pagination.page <= 1}
-              className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
+      {pagination && pagination.totalPages > 1 && (() => {
+        // Sliding window pagination: show up to 5 page buttons around current page
+        const maxVisible = 5;
+        let startPage = Math.max(1, pagination.page - Math.floor(maxVisible / 2));
+        let endPage = Math.min(pagination.totalPages, startPage + maxVisible - 1);
+        if (endPage - startPage + 1 < maxVisible) {
+          startPage = Math.max(1, endPage - maxVisible + 1);
+        }
+        const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-            {Array.from({ length: Math.min(pagination.totalPages, 5) }).map(
-              (_, i) => {
-                const pageNum = i + 1;
-                return (
+        return (
+          <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
+            <span className="text-xs text-slate-500">
+              Halaman {pagination.page} dari {pagination.totalPages}
+            </span>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => pagination.onPageChange(pagination.page - 1)}
+                disabled={pagination.page <= 1}
+                className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              {startPage > 1 && (
+                <>
                   <button
-                    key={pageNum}
-                    onClick={() => pagination.onPageChange(pageNum)}
-                    className={cn(
-                      "w-7 h-7 rounded-md text-xs font-medium transition-colors",
-                      pagination.page === pageNum
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "text-slate-400 hover:text-white hover:bg-slate-800"
-                    )}
+                    onClick={() => pagination.onPageChange(1)}
+                    className="w-7 h-7 rounded-md text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                   >
-                    {pageNum}
+                    1
                   </button>
-                );
-              }
-            )}
+                  {startPage > 2 && (
+                    <span className="w-7 h-7 flex items-center justify-center text-xs text-slate-600">…</span>
+                  )}
+                </>
+              )}
 
-            <button
-              onClick={() => pagination.onPageChange(pagination.page + 1)}
-              disabled={pagination.page >= pagination.totalPages}
-              className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
+              {pages.map((pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => pagination.onPageChange(pageNum)}
+                  className={cn(
+                    "w-7 h-7 rounded-md text-xs font-medium transition-colors",
+                    pagination.page === pageNum
+                      ? "bg-emerald-500/20 text-emerald-400"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800"
+                  )}
+                >
+                  {pageNum}
+                </button>
+              ))}
+
+              {endPage < pagination.totalPages && (
+                <>
+                  {endPage < pagination.totalPages - 1 && (
+                    <span className="w-7 h-7 flex items-center justify-center text-xs text-slate-600">…</span>
+                  )}
+                  <button
+                    onClick={() => pagination.onPageChange(pagination.totalPages)}
+                    className="w-7 h-7 rounded-md text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  >
+                    {pagination.totalPages}
+                  </button>
+                </>
+              )}
+
+              <button
+                onClick={() => pagination.onPageChange(pagination.page + 1)}
+                disabled={pagination.page >= pagination.totalPages}
+                className="p-1.5 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

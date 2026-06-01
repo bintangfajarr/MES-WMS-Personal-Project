@@ -185,8 +185,9 @@ export default function PaddyLotDetailPage({ params }: { params: Promise<{ id: s
 
                 <div className="bg-slate-800/20 p-4 border border-slate-800 rounded-xl flex flex-col justify-between">
                   <div className="space-y-2">
-                    <span className="block text-[10px] text-slate-400 uppercase tracking-wider font-semibold">QC Inspector Notes</span>
-                    <p className="text-slate-300 italic">"{lot.incomingQC.notes || "No extra remarks recorded"}"</p>
+                    <p className="text-slate-300 italic">
+                      &ldquo;{lot.incomingQC.notes || "No extra remarks recorded"}&rdquo;
+                    </p>
                   </div>
                   {lot.incomingQC.result === "GAGAL" && (
                     <div className="mt-4 p-3 bg-red-950/20 border border-red-500/20 rounded-lg text-red-400">

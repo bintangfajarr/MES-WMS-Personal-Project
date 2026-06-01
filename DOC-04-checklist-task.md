@@ -949,62 +949,62 @@ PHASE 16 → Deployment
 Jalankan semua skenario berikut:
 
 **Skenario 1: Alur Penuh Produksi**
-- [ ] Login sebagai OPR_WHS → catat penerimaan padi baru (moistureContent 18%)
-- [ ] Submit QC → diterima
-- [ ] Login sebagai ADMIN → buat Work Order untuk lot tersebut
-- [ ] Login sebagai OPR_PROD → submit log pengeringan (drying step)
-- [ ] Submit log penggilingan → verifikasi husking yield terhitung
-- [ ] Submit log penyosohan → verifikasi polishing yield terhitung
-- [ ] Submit log sortasi → verifikasi grading decision & whole grain ratio
-- [ ] Submit log pengemasan → verifikasi batch terbuat & WO selesai
-- [ ] Login sebagai OPR_WHS → terima batch ke gudang, assign lokasi
-- [ ] Verifikasi stok beras bertambah di dashboard
+- [x] Login sebagai OPR_WHS → catat penerimaan padi baru (moistureContent 18%)
+- [x] Submit QC → diterima
+- [x] Login sebagai ADMIN → buat Work Order untuk lot tersebut
+- [x] Login sebagai OPR_PROD → submit log pengeringan (drying step)
+- [x] Submit log penggilingan → verifikasi husking yield terhitung
+- [x] Submit log penyosohan → verifikasi polishing yield terhitung
+- [x] Submit log sortasi → verifikasi grading decision & whole grain ratio
+- [x] Submit log pengemasan → verifikasi batch terbuat & WO selesai
+- [x] Login sebagai OPR_WHS → terima batch ke gudang, assign lokasi
+- [x] Verifikasi stok beras bertambah di dashboard
 
 **Skenario 2: Pengiriman**
-- [ ] Login sebagai ADMIN → buat Delivery Order ke pelanggan
-- [ ] Verifikasi FIFO suggestion muncul
-- [ ] Confirm DO → Picking → Ready → Ship
-- [ ] Login sebagai DRIVER → konfirmasi terkirim
-- [ ] Verifikasi stok beras berkurang
+- [x] Login sebagai ADMIN → buat Delivery Order ke pelanggan
+- [x] Verifikasi FIFO suggestion muncul
+- [x] Confirm DO → Picking → Ready → Ship
+- [x] Login sebagai DRIVER → konfirmasi terkirim
+- [x] Verifikasi stok beras berkurang
 
 **Skenario 3: Edge Cases**
-- [ ] Coba submit packaging saat step sortasi belum selesai → harus error
-- [ ] Coba buat DO melebihi stok → harus error
-- [ ] Coba akses halaman master data sebagai OPR_PROD → harus redirect/forbidden
-- [ ] Submit husking log dengan yield <75% → alert harus muncul
-- [ ] Submit padi dengan kadar air >14% → WO harus include step pengeringan
+- [x] Coba submit packaging saat step sortasi belum selesai → harus error
+- [x] Coba buat DO melebihi stok → harus error
+- [x] Coba akses halaman master data sebagai OPR_PROD → harus redirect/forbidden
+- [x] Submit husking log dengan yield <75% → alert harus muncul
+- [x] Submit padi dengan kadar air >14% → WO harus include step pengeringan
 
 **Skenario 4: QC Padi Ditolak**
-- [ ] Catat penerimaan padi dengan kotoran 8%
-- [ ] Submit QC → ditolak
-- [ ] Verifikasi stok gudang padi tidak bertambah
-- [ ] Verifikasi lot status DITOLAK
+- [x] Catat penerimaan padi dengan kotoran 8%
+- [x] Submit QC → ditolak
+- [x] Verifikasi stok gudang padi tidak bertambah
+- [x] Verifikasi lot status DITOLAK
 
 ### 15.2 UI Polish
 
-- [ ] Cek semua halaman di mobile (375px) — tidak ada overflow horizontal
-- [ ] Cek semua form bisa disubmit dari mobile (input cukup besar untuk tap)
-- [ ] Verifikasi semua StatusBadge warnanya sesuai DOC-02 section 7.2
-- [ ] Verifikasi sidebar mobile berfungsi (buka/tutup)
-- [ ] Cek semua tabel punya loading skeleton saat fetch
-- [ ] Cek semua tabel punya empty state jika data kosong
-- [ ] Pastikan semua angka desimal ditampilkan dengan 2 desimal
-- [ ] Pastikan semua tanggal ditampilkan dalam format Indonesia (dd MMM yyyy)
-- [ ] Pastikan semua angka besar menggunakan separator ribuan (1.000, tidak 1000)
+- [x] Cek semua halaman di mobile (375px) — tidak ada overflow horizontal
+- [x] Cek semua form bisa disubmit dari mobile (input cukup besar untuk tap)
+- [x] Verifikasi semua StatusBadge warnanya sesuai DOC-02 section 7.2
+- [x] Verifikasi sidebar mobile berfungsi (buka/tutup)
+- [x] Cek semua tabel punya loading skeleton saat fetch
+- [x] Cek semua tabel punya empty state jika data kosong
+- [x] Pastikan semua angka desimal ditampilkan dengan 2 desimal
+- [x] Pastikan semua tanggal ditampilkan dalam format Indonesia (dd MMM yyyy)
+- [x] Pastikan semua angka besar menggunakan separator ribuan (1.000, tidak 1000)
 
 ### 15.3 Error Handling
 
-- [ ] Semua API route punya try-catch dan return error response yang jelas
-- [ ] Semua halaman punya error boundary atau error state component
-- [ ] Network error saat fetch → tampilkan ErrorState + tombol retry
-- [ ] Form validation error → tampilkan pesan error di bawah field
+- [x] Semua API route punya try-catch dan return error response yang jelas
+- [x] Semua halaman punya error boundary atau error state component
+- [x] Network error saat fetch → tampilkan ErrorState + tombol retry
+- [x] Form validation error → tampilkan pesan error di bawah field
 
 ### 15.4 Performance
 
-- [ ] Pastikan query API tidak ada N+1 (gunakan Prisma `include` bukan loop query)
-- [ ] Dashboard stats menggunakan `Promise.all()` untuk parallel query
-- [ ] List halaman menggunakan pagination (default 20 item per halaman)
-- [ ] Gambar (jika ada) di-optimize dengan `next/image`
+- [x] Pastikan query API tidak ada N+1 (gunakan Prisma `include` bukan loop query)
+- [x] Dashboard stats menggunakan `Promise.all()` untuk parallel query
+- [x] List halaman menggunakan pagination (default 20 item per halaman)
+- [x] Gambar (jika ada) di-optimize dengan `next/image`
 
 ---
 
@@ -1012,12 +1012,12 @@ Jalankan semua skenario berikut:
 
 ### 16.1 Persiapan
 
-- [ ] Pastikan semua `console.log()` debug sudah dihapus
-- [ ] Buat `.env.example` dengan semua env vars yang diperlukan (tanpa value)
-- [ ] Pastikan `prisma/seed.ts` berjalan sempurna: `npm run db:seed`
-- [ ] Jalankan `npm run build` di lokal — tidak ada error TypeScript
-- [ ] Jalankan `npm run lint` — tidak ada ESLint error
-- [ ] Commit semua perubahan ke GitHub
+- [x] Pastikan semua `console.log()` debug sudah dihapus
+- [x] Buat `.env.example` dengan semua env vars yang diperlukan (tanpa value)
+- [x] Pastikan `prisma/seed.ts` berjalan sempurna: `npm run db:seed`
+- [x] Jalankan `npm run build` di lokal — tidak ada error TypeScript
+- [x] Jalankan `npm run lint` — tidak ada ESLint error
+- [x] Commit semua perubahan ke GitHub
 
 ### 16.2 Railway Setup
 

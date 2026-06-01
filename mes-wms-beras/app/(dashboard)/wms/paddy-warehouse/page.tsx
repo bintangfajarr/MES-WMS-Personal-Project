@@ -84,7 +84,7 @@ export default function PaddyWarehousePage() {
         setError(json.error);
       }
     } catch {
-      setError("Failed to fetch paddy lots");
+      setError("Gagal memuat data lot padi");
     } finally {
       setLoading(false);
     }
@@ -123,7 +123,7 @@ export default function PaddyWarehousePage() {
           <div className="space-y-1 relative z-10">
             <span className="text-xs text-slate-400 font-medium">Total Stok Padi</span>
             <h2 className="text-2xl font-bold text-white">
-              {stats.totalWeight.toLocaleString()} <span className="text-xs text-slate-400">kg</span>
+              {stats.totalWeight.toLocaleString("id-ID")} <span className="text-xs text-slate-400">kg</span>
             </h2>
           </div>
           <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center relative z-10">

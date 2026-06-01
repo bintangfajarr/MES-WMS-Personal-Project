@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "PT. Beras Nusantara — MES + WMS",
   description:
-    "Manufacturing Execution System and Warehouse Management System for rice milling factory",
+    "Sistem Eksekusi Manufaktur dan Manajemen Gudang untuk pabrik penggilingan padi PT. Beras Nusantara",
 };
 
 export default function RootLayout({
@@ -20,10 +20,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html lang="id" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
 }
+

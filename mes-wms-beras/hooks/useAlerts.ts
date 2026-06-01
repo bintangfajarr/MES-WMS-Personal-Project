@@ -71,14 +71,42 @@ export function useAlerts() {
   };
 
   useEffect(() => {
-    fetchAlerts();
+    let cancelled = false;
+
+    const loadAlerts = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/alerts");
+        const result = await res.json();
+        if (!cancelled) {
+          if (result.success) {
+            setAlerts(result.data);
+            setError(null);
+          } else {
+            setError(result.error || "Gagal memuat alert");
+          }
+        }
+      } catch (e) {
+        console.error("Error fetching alerts:", e);
+        if (!cancelled) {
+          setError("Gagal menghubungi server");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    loadAlerts();
 
     // Poll every 30 seconds to keep alerts updated
     const interval = setInterval(() => {
       fetchAlerts(true);
     }, 30000);
 
-    return () => clearInterval(interval);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, [fetchAlerts]);
 
   return {

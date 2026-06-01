@@ -61,37 +61,37 @@ const statusColors: Record<string, Record<string, string>> = {
 
 const statusLabels: Record<string, string> = {
   // Paddy Lot
-  MENUNGGU_QC: "Waiting QC",
-  DITERIMA: "Accepted",
-  DITOLAK: "Rejected",
-  ANTRIAN_GILING: "Milling Queue",
+  MENUNGGU_QC: "Menunggu QC",
+  DITERIMA: "Diterima",
+  DITOLAK: "Ditolak",
+  ANTRIAN_GILING: "Antrian Giling",
   RESERVED: "Reserved",
-  SEDANG_DIGILING: "Milling",
-  SELESAI: "Completed",
+  SEDANG_DIGILING: "Sedang Digiling",
+  SELESAI: "Selesai",
   // Work Order
   DRAFT: "Draft",
-  IN_PROGRESS: "In Progress",
-  CANCELLED: "Cancelled",
+  IN_PROGRESS: "Sedang Berjalan",
+  CANCELLED: "Dibatalkan",
   // Batch
-  PRODUKSI: "Production",
-  DI_GUDANG: "In Warehouse",
-  SHIPPED: "Shipped",
-  EXPIRED: "Expired",
-  QUARANTINE: "Quarantine",
+  PRODUKSI: "Produksi",
+  DI_GUDANG: "Di Gudang",
+  SHIPPED: "Terkirim",
+  EXPIRED: "Kadaluarsa",
+  QUARANTINE: "Karantina",
   // Delivery
-  CONFIRMED: "Confirmed",
+  CONFIRMED: "Dikonfirmasi",
   PICKING: "Picking",
-  READY_TO_SHIP: "Ready to Ship",
-  DELIVERED: "Delivered",
-  PARTIAL_RETURN: "Partial Return",
+  READY_TO_SHIP: "Siap Kirim",
+  DELIVERED: "Terkirim",
+  PARTIAL_RETURN: "Retur Sebagian",
   // Machine
-  ACTIVE: "Active",
+  ACTIVE: "Aktif",
   MAINTENANCE: "Maintenance",
-  INACTIVE: "Inactive",
-  BREAKDOWN: "Breakdown",
+  INACTIVE: "Tidak Aktif",
+  BREAKDOWN: "Rusak",
   // QC
-  LULUS: "Passed",
-  GAGAL: "Failed",
+  LULUS: "Lulus",
+  GAGAL: "Gagal",
 };
 
 interface StatusBadgeProps {

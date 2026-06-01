@@ -23,33 +23,34 @@ interface ProductionChartProps {
   data: ChartDataPoint[];
 }
 
-export default function ProductionChart({ data }: ProductionChartProps) {
-  // Custom tooltips to present nicely in dark mode
-  const CustomTooltip = ({ active, payload, label }: any) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-slate-900/95 border border-slate-800 p-4 rounded-xl shadow-xl backdrop-blur-md space-y-2">
-          <p className="text-xs font-bold text-slate-200">{label}</p>
-          <div className="space-y-1">
-            {payload.map((entry: any, index: number) => (
-              <div key={index} className="flex justify-between items-center gap-6 text-xs">
-                <span className="flex items-center gap-1.5" style={{ color: entry.color }}>
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-                  {entry.name}:
-                </span>
-                <span className="font-bold text-white">
-                  {entry.name.includes("Yield")
-                    ? `${entry.value}%`
-                    : `${entry.value.toLocaleString("id-ID")} kg`}
-                </span>
-              </div>
-            ))}
-          </div>
+// Custom tooltips to present nicely in dark mode
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-900/95 border border-slate-800 p-4 rounded-xl shadow-xl backdrop-blur-md space-y-2">
+        <p className="text-xs font-bold text-slate-200">{label}</p>
+        <div className="space-y-1">
+          {payload.map((entry: any, index: number) => (
+            <div key={index} className="flex justify-between items-center gap-6 text-xs">
+              <span className="flex items-center gap-1.5" style={{ color: entry.color }}>
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                {entry.name}:
+              </span>
+              <span className="font-bold text-white">
+                {entry.name.includes("Yield")
+                  ? `${entry.value}%`
+                  : `${entry.value.toLocaleString("id-ID")} kg`}
+              </span>
+            </div>
+          ))}
         </div>
-      );
-    }
-    return null;
-  };
+      </div>
+    );
+  }
+  return null;
+};
+
+export default function ProductionChart({ data }: ProductionChartProps) {
 
   return (
     <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-5 space-y-4">

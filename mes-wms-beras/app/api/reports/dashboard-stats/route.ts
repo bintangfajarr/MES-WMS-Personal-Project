@@ -121,62 +121,67 @@ export async function GET() {
     });
 
     // 8. Calculate 7-day comparative production/delivery trend & overall yield
-    const productionChartData = [];
-    for (let i = 6; i >= 0; i--) {
+    const dayPromises = Array.from({ length: 7 }, (_, idx) => {
+      const i = 6 - idx;
       const date = new Date();
       date.setDate(date.getDate() - i);
       const startOfDay = new Date(date.setHours(0, 0, 0, 0));
       const endOfDay = new Date(date.setHours(23, 59, 59, 999));
 
-      // Inbound Paddy: netWeight of PaddyLots arrived and accepted today
-      const paddyLotsToday = await prisma.paddyLot.findMany({
-        where: {
-          arrivedAt: { gte: startOfDay, lte: endOfDay },
-          status: { not: "DITOLAK" },
-        },
-        select: { netWeight: true },
-      });
-      const paddyIn = paddyLotsToday.reduce((sum, lot) => sum + Number(lot.netWeight), 0);
-
-      // Outbound Rice: delivered/shipped today
-      const deliveryOrdersToday = await prisma.deliveryOrder.findMany({
-        where: {
-          deliveryDate: { gte: startOfDay, lte: endOfDay },
-          status: { in: ["SHIPPED", "DELIVERED", "PARTIAL_RETURN"] },
-        },
-        include: {
-          items: {
-            include: {
-              batch: true,
+      return Promise.all([
+        // Inbound Paddy
+        prisma.paddyLot.findMany({
+          where: {
+            arrivedAt: { gte: startOfDay, lte: endOfDay },
+            status: { not: "DITOLAK" },
+          },
+          select: { netWeight: true },
+        }),
+        // Outbound Rice
+        prisma.deliveryOrder.findMany({
+          where: {
+            deliveryDate: { gte: startOfDay, lte: endOfDay },
+            status: { in: ["SHIPPED", "DELIVERED", "PARTIAL_RETURN"] },
+          },
+          include: {
+            items: {
+              include: {
+                batch: true,
+              },
             },
           },
-        },
-      });
-      let riceOut = 0;
-      deliveryOrdersToday.forEach((doOrder) => {
-        doOrder.items.forEach((item) => {
-          riceOut += item.orderedQty * Number(item.batch.packagingSize);
+        }),
+        // Average Yield of completed WOs
+        prisma.workOrder.findMany({
+          where: {
+            completedAt: { gte: startOfDay, lte: endOfDay },
+            status: "SELESAI",
+          },
+          select: { overallYield: true },
+        }),
+      ]).then(([paddyLotsToday, deliveryOrdersToday, completedWOsToday]) => {
+        const paddyIn = paddyLotsToday.reduce((sum, lot) => sum + Number(lot.netWeight), 0);
+
+        let riceOut = 0;
+        deliveryOrdersToday.forEach((doOrder) => {
+          doOrder.items.forEach((item) => {
+            riceOut += item.orderedQty * Number(item.batch.packagingSize);
+          });
         });
-      });
 
-      // Average Yield of completed WOs today
-      const completedWOsToday = await prisma.workOrder.findMany({
-        where: {
-          completedAt: { gte: startOfDay, lte: endOfDay },
-          status: "SELESAI",
-        },
-        select: { overallYield: true },
-      });
-      const yieldSum = completedWOsToday.reduce((sum, wo) => sum + Number(wo.overallYield || 0), 0);
-      const avgYield = completedWOsToday.length > 0 ? yieldSum / completedWOsToday.length : 0;
+        const yieldSum = completedWOsToday.reduce((sum, wo) => sum + Number(wo.overallYield || 0), 0);
+        const avgYield = completedWOsToday.length > 0 ? yieldSum / completedWOsToday.length : 0;
 
-      productionChartData.push({
-        date: format(startOfDay, "dd MMM", { locale: localeId }),
-        paddyIn,
-        riceOut,
-        yield: Math.round(avgYield * 100) / 100,
+        return {
+          date: format(startOfDay, "dd MMM", { locale: localeId }),
+          paddyIn,
+          riceOut,
+          yield: Math.round(avgYield * 100) / 100,
+        };
       });
-    }
+    });
+
+    const productionChartData = await Promise.all(dayPromises);
 
     return NextResponse.json({
       success: true,
