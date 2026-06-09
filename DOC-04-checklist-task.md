@@ -1021,14 +1021,14 @@ Jalankan semua skenario berikut:
 
 ### 16.2 Railway Setup
 
-- [ ] Buat akun Railway di railway.app
-- [ ] Buat project baru di Railway
-- [ ] **Add service: PostgreSQL** (Railway managed database)
+- [x] Buat akun Railway di railway.app
+- [x] Buat project baru di Railway
+- [x] **Add service: PostgreSQL** (Railway managed database)
   - Copy `DATABASE_URL` yang di-generate Railway
-- [ ] **Add service: GitHub Repo**
+- [x] **Add service: GitHub Repo**
   - Connect ke repo GitHub
   - Railway auto-detect Next.js project
-- [ ] **Set environment variables** di Railway service settings:
+- [x] **Set environment variables** di Railway service settings:
   - `DATABASE_URL` — dari PostgreSQL service
   - `NEXTAUTH_URL` — URL Railway yang di-generate (misal: `https://mes-wms-beras.railway.app`)
   - `NEXTAUTH_SECRET` — generate dengan `openssl rand -base64 32`
@@ -1036,7 +1036,7 @@ Jalankan semua skenario berikut:
 
 ### 16.3 Deploy
 
-- [ ] Tambahkan `railway.json` atau pastikan `package.json` punya script yang benar:
+- [x] Tambahkan `railway.json` atau pastikan `package.json` punya script yang benar:
   ```json
   {
     "scripts": {
@@ -1045,24 +1045,24 @@ Jalankan semua skenario berikut:
     }
   }
   ```
-- [ ] Push ke GitHub → Railway auto-deploy
-- [ ] Monitor deployment logs di Railway dashboard
-- [ ] Setelah deploy sukses: jalankan seed di Railway shell:
+- [x] Push ke GitHub → Railway auto-deploy
+- [x] Monitor deployment logs di Railway dashboard
+- [x] Setelah deploy sukses: jalankan seed di Railway shell:
   ```bash
   npm run db:seed
   ```
-- [ ] Buka URL Railway → test login dengan user seed
-- [ ] Test semua alur utama di production environment
+- [x] Buka URL Railway → test login dengan user seed
+- [x] Test semua alur utama di production environment
 
 ### 16.4 Verifikasi Final
 
-- [ ] Login berhasil di URL production
-- [ ] Dashboard tampil dengan data seed
-- [ ] Alur penerimaan padi berfungsi
-- [ ] Alur WO + produksi berfungsi
-- [ ] Surat jalan PDF bisa di-download
-- [ ] Semua halaman responsif di mobile
-- [ ] Tidak ada error 500 di production logs
+- [x] Login berhasil di URL production
+- [x] Dashboard tampil dengan data seed
+- [x] Alur penerimaan padi berfungsi
+- [x] Alur WO + produksi berfungsi
+- [x] Surat jalan PDF bisa di-download
+- [x] Semua halaman responsif di mobile
+- [x] Tidak ada error 500 di production logs
 
 ---
 
